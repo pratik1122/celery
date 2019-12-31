@@ -1,4 +1,3 @@
-
 from celery import shared_task
 from time import sleep
 
@@ -7,7 +6,6 @@ from time import sleep
 def sleepy(duration):
     sleep(duration)
     return None
-
 
 
 import django
@@ -21,13 +19,24 @@ from celery.decorators import periodic_task
 from django.utils.timezone import timedelta
 
 
-# @periodic_task(run_every=(crontab(minute='*/1')),name= 'send_email_task', ignore_result=True)
+#@periodic_task(run_every=(crontab(minute='*/1')),name= 'send_email_task', ignore_result=True)
 
 
-
-@periodic_task(run_every=timedelta(seconds=5))
+@shared_task
 def send_email_task():
     send_mail('Subject here', 'NEW TASK', settings.EMAIL_HOST_USER,
               ['pratik.mukherjee@kevit.io'], fail_silently=False)
     return None
+
+
+from django.http import HttpResponse
+@shared_task
+def get_response():
+    return HttpResponse('<h3> The raw is very good</h3>')
+
+from kombu.common import Broadcast
+from celery.schedules import crontab
+
+
+
 

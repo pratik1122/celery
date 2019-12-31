@@ -6,8 +6,6 @@ from testapp.tasks  import sleepy,send_email_task
 from celery import shared_task
 
 
-
-
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import HttpResponse
@@ -19,8 +17,6 @@ def index(request):
 
 
 
-#
-#
 # #@task(name="sum_two_numbers")
 # @shared_task
 # def add(x, y):
@@ -42,6 +38,7 @@ def index(request):
 #
 #
 
+
 #
 # @periodic_task(run_every=(crontab(minute='*/15')), name="some_task", ignore_result=True)
 # def some_task(a,b):
@@ -49,3 +46,5 @@ def index(request):
 #
 # print(some_task(2,9))
 #
+
+
