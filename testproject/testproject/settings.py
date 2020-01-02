@@ -9,13 +9,13 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 STATIC_DIR = os.path.join(BASE_DIR,'static')
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'testapp'
+
 ]
 
 
@@ -109,6 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -143,6 +146,8 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Kolkata'
 
 
+from datetime import timedelta
+
 
 
 EMAIL_USE_TLS = True
@@ -154,3 +159,22 @@ EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
+
+from testapp.tasks import message1,message2
+from celery.schedules import crontab
+import celery
+
+
+CELERYBEAT_SCHEDULE = {
+
+    'T1': {
+        'task': 'message1',
+        'schedule': crontab(minute='*/1')
+    },
+
+
+    'T2': {
+        'task': 'message2',
+        'schedule': crontab(minute='*/2')
+    },
+}

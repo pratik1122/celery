@@ -1,22 +1,22 @@
 from django.shortcuts import render
-
-# Create your views here.
+#
+# # Create your views here.
 from django.http import HttpResponse
-from testapp.tasks  import sleepy,send_email_task
+from testapp.tasks  import message1,message2
 from celery import shared_task
 
 
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import HttpResponse
-
-
-def index(request):
-    send_email_task.delay()
-    return HttpResponse('<h2> MAIL SEND now </h2>')
-
-
-
+#
+#
+# def index(request):
+#     send_email_task.delay()
+#     return HttpResponse('<h2> MAIL SEND now </h2>')
+#
+#
+#
 # #@task(name="sum_two_numbers")
 # @shared_task
 # def add(x, y):
@@ -37,8 +37,8 @@ def index(request):
 # from celery.decorators import periodic_task
 #
 #
-
-
+#
+#
 #
 # @periodic_task(run_every=(crontab(minute='*/15')), name="some_task", ignore_result=True)
 # def some_task(a,b):
@@ -46,5 +46,20 @@ def index(request):
 #
 # print(some_task(2,9))
 #
+#
+#
+#
+# def index(request):
+#     print(message1.delay())
+#     print(message2.delay())
+#     return None
 
-
+# from testapp.tasks import message1 , message2
+# from django.http import HttpResponse
+#
+#
+#
+# def index(request):
+#     message1.delay()
+#     message2.delay()
+#     return None

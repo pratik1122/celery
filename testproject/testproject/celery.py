@@ -2,10 +2,13 @@ from __future__ import absolute_import
 import os
 from celery import Celery
 from django.conf import settings
+from celery.schedules import crontab
+from testapp import tasks
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'testproject.settings')
 app = Celery('testproject')
+
 
 
 # Using a string here means the worker will not have to
@@ -15,7 +18,10 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 
 
+
+
 @app.task(bind=True)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
+
 
